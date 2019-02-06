@@ -11,22 +11,38 @@ namespace UnitTest_BankAcctSample.Tests
     [TestClass]//Parenthesis are optional
     public class AccountTests
     {
-        [TestMethod()]
+        private Account acc;
+
+        [TestInitialize]//Run's this before every single test
+        public void TestInit()
+        {
+            acc = new Account("Rob");
+            acc.Deposit(100);
+        }
+
+        [TestMethod]
         public void Withdraw_ValidAmount_FromBalance()
         {
             //AAA testing pattern (Arrange, Act, Assert)
-            //Arrange-Gets all the values (variables)
-            Account account = new Account("Rob85430");//need a parameter here because of the constructor
-            double startingBalance = 100;
+            //Arrange-Gets all the values (variables) 
+            double startingBalance = acc.Balance;
             double withdrawAmount = 10;
             double expected = startingBalance - withdrawAmount;
-            account.Deposit(startingBalance);
-
+            
             //Act-calls the method your testing
-            account.Withdraw(withdrawAmount);
+            acc.Withdraw(withdrawAmount);
 
-            //Assert will check the expected outcome
-            Assert.AreEqual(expected, account.Balance);
+            //Assert will check the expected outcome (checks the values)
+            Assert.AreEqual(expected, acc.Balance);
+        }
+
+        [TestMethod]
+        public void Withdraw_NegativeAmount_ThrowsArgumentException()
+        {
+            //Arrange
+            double withdrawAmount = -5;
+            //Assert => Act
+            Assert.ThrowsException<ArgumentException> (() => acc.Withdraw(withdrawAmount));//Empty () here because we aren't using a parameter to run the function
         }
     }
 }

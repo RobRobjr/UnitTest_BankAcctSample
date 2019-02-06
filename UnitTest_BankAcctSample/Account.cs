@@ -23,13 +23,19 @@ namespace UnitTest_BankAcctSample
         public double Balance { get; private set; }
 
         /// <summary>
-        /// Withdraws a specified amount from this bank account
+        /// Withdraws a specified positive amount from this bank account
         /// </summary>
         /// <param name="amount">The amount to withdraw</param>
+        /// <exception cref="ArgumentException">Negative amounts will throw exception</exception>
         /// <returns>Returns the new balance</returns>
         public double Withdraw(double amount)
         {
-            //TODO: Ensure there is money to be withdrawn
+            //Ensure there is money to be withdrawn
+            if (amount <= 0)
+            {
+                throw new ArgumentException($"{nameof(amount)} must be positive!");
+            }
+         
             //TODO: Add a limit to withdraw
             //TODO: Ensure the amount is positive
             Balance -= amount;
