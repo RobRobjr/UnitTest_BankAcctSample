@@ -43,7 +43,8 @@ namespace UnitTest_BankAcctSample
         /// <returns>Current balance</returns>
         public double Deposit(double amount)
         {
-            throw new NotImplementedException();
+            Balance += amount;
+            return Balance;
         }
     }
 }
